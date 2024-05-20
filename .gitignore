@@ -1,0 +1,5 @@
+make.sh
+run.sh
+bin/*
+cmake/build/
+
