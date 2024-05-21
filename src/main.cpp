@@ -21,7 +21,6 @@ static void print_help() {
 }
 
 int main(int argc, char* argv[]) {
-  std::cout << "hello world!" << std::endl;
 
   const std::vector<std::pair<std::string, double>> keyval_pairs = [] {
     std::vector<std::pair<std::string, double>> pairs;
@@ -98,10 +97,16 @@ int main(int argc, char* argv[]) {
   for (const auto& keyval : keyval_pairs) {
     std::vector<std::pair<std::string, double>> keyval_vector = {keyval};
 
+    using namespace std::chrono;
+    auto start = high_resolution_clock::now();
     const auto ret = iface.send(name, tag, keyval_vector);
-    if (ret) std::cout << " (success)" << std::endl;
-    else std::cout << " (failure)" << std::endl;
+    auto end = high_resolution_clock::now();
+    auto elapsed = duration_cast<milliseconds>(end - start);
+    std::cout << "\rInfluxdb server write time: " 
+              << elapsed.count() << "ms"
+              << std::flush;
 
+    if (!ret) break;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 

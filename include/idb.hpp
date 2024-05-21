@@ -55,6 +55,7 @@ class interface {
     const std::string org;    /**< InfluxDB organization */
     const std::string bucket; /**< Bucket to send data to */
     const std::string token;  /**< Token for write access */
+
 };
 
 } // namespace idb
