@@ -1,26 +1,34 @@
 #include <iostream>
-
-#include <string>
 #include <vector>
-#include <sstream>
-#include <ctime>
-#include <chrono>
-#include <thread>
-
+#include <string>
 #include <getopt.h>
 #include <cstdlib>
-
+#include <chrono>
+#include <thread>
 #include <idb.hpp>
-int main(int argc, char* argv[]) {
 
+static void print_help() {
+  std::cout << "Usage: idb[options]\n"
+        << "Options:\n"
+        << "  -u, --url     <url>           URL of the InfluxDB server\n"
+        << "  -o, --org     <organization>  InfluxDB organization\n"
+        << "  -b, --bucket  <bucket>        Bucket to send data to\n"
+        << "  -t, --token   <token>         Token for write access\n"
+        << "  -n, --name    <name>          Name of the database\n"
+        << "  -g, --tag     <tag>           Metadata tag\n"
+        << "  -h, --help                    Display this help message"
+        << std::endl;
+}
+
+int main(int argc, char* argv[]) {
   std::cout << "hello world!" << std::endl;
 
   const std::vector<std::pair<std::string, double>> keyval_pairs = [] {
-      std::vector<std::pair<std::string, double>> pairs;
-      for (int i = 0; i <= 1000; ++i) {
-          pairs.emplace_back("value", i);
-      }
-      return pairs;
+    std::vector<std::pair<std::string, double>> pairs;
+    for (int i = 0; i <= 1000; ++i) {
+      pairs.emplace_back("value", i);
+    }
+    return pairs;
   }();
 
   std::string url = "";
@@ -38,10 +46,11 @@ int main(int argc, char* argv[]) {
     {"token", required_argument, nullptr, 't'},
     {"name", required_argument, nullptr, 'n'},
     {"tag", required_argument, nullptr, 'g'},
+    {"help", no_argument, nullptr, 'h'},
     {nullptr, 0, nullptr, 0}
   };
 
-  while ((option = getopt_long(argc, argv, "u:o:b:t:n:g:", 
+  while ((option = getopt_long(argc, argv, "u:o:b:t:n:g:h",
                                long_options, nullptr)) != -1) {
     switch (option) {
       case 'u':
@@ -62,14 +71,26 @@ int main(int argc, char* argv[]) {
       case 'g':
         tag = optarg;
         break;
+      case 'h':
+        print_help();
+        return 0;
       case '?':
-        break;
+        print_help();
+        return 1;
       default:
         std::abort();
     }
   }
 
-  class idb::interface iface(url, org, bucket, token);
+  if (url.empty()    || org.empty()   || 
+      bucket.empty() || token.empty() ||
+      name.empty()   || tag.empty())  {
+    std::cerr << "Error: All options must be specified.\n";
+    print_help();
+    return 1;
+  }
+
+  idb::interface iface(url, org, bucket, token);
 
   for (const auto& keyval : keyval_pairs) {
     std::vector<std::pair<std::string, double>> keyval_vector = {keyval};
