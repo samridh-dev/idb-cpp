@@ -8,7 +8,7 @@ if (ENABLE_BUILD_EXAMPLE)
   endif()
 
   add_executable(idb ${SOURCE_EXEC})
-  # target_link_libraries(idb PRIVATE hdf5 hdf5_cpp)
+  target_link_libraries(idb PRIVATE libcurl)
   if (ENABLE_BINARY_FOLDER)
     set_target_properties(idb 
       PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"

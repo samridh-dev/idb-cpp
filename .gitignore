@@ -1,5 +1,5 @@
 make.sh
 run.sh
+*.swp
 bin/*
 cmake/build/
-

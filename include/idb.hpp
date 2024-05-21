@@ -2,6 +2,7 @@
 #define IDBCPP_HPP
 
 #include <string>
+#include <vector>
 
 namespace idb {
 
@@ -13,10 +14,13 @@ class interface {
               const std::string& _org,
               const std::string& _bucket,
               const std::string& _token);
-  
+
     template <typename T>
-    bool write(const std::string& name, const std::string& tag,
-               const std::string& key, const T& val);
+
+    bool send(const std::string& name, const std::string& tag,
+              const std::vector<std::pair<std::string, T>>& keyval);
+
+    inline bool send(const std::string& data);
 
   private:
 
@@ -25,10 +29,9 @@ class interface {
     const std::string bucket;
     const std::string token;
 
-    bool send_data(const std::string& data);
-
 };
 
 } // namespace idb
+#include "idb.ipp"
 
 #endif
