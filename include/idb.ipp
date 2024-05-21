@@ -58,7 +58,8 @@ inline bool idb::interface::send(const std::string& data) {
   CURLcode res = curl_easy_perform(handle);
   if (res != CURLE_OK) {
 
-    std::cerr << "CURL request failed: " 
+    std::cerr << "\n\033[31mError: \033[0m"
+              << "curl request failed: " 
               << curl_easy_strerror(res) 
               << std::endl;
 
@@ -66,6 +67,21 @@ inline bool idb::interface::send(const std::string& data) {
     curl_easy_cleanup(handle);
     return false;
   }
+
+  long http_code = 0;
+  curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &http_code);
+  if (http_code != 204) {
+
+    std::cerr << "\n\033[31mError: \033[0m"
+              << "write to InfluxDB server failed" 
+              << " (code:" << http_code << ")"
+              << std::endl;
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(handle);
+    return false;
+  }
+
   
   curl_slist_free_all(headers);
   curl_easy_cleanup(handle);

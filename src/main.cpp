@@ -91,6 +91,9 @@ int main(int argc, char* argv[]) {
   }
 
   idb::interface iface(url, org, bucket, token);
+  if (!iface.check_server()) {
+    return 1;
+  }
 
   for (const auto& keyval : keyval_pairs) {
     std::vector<std::pair<std::string, double>> keyval_vector = {keyval};

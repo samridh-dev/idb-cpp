@@ -24,6 +24,11 @@ class interface {
             const std::string& _org,
             const std::string& _bucket,
             const std::string& _token);
+  
+  /**
+   * @brief Checks if Influxdb server is ready to recieve data
+   */ 
+  bool check_server() const;
 
   /**
    * @brief Sends data to the InfluxDB database.
