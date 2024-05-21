@@ -1,6 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////
+/// Template Implementation                                                 ///
+///////////////////////////////////////////////////////////////////////////////
+
 #include <sstream>
 #include <chrono>
 #include <iostream>
+
+/* ------------------------------------------------------------------------- */
+/* Method : interface::send()                                                */
+/* ------------------------------------------------------------------------- */
 
 template <typename T>
 bool idb::interface::send(
@@ -30,6 +38,10 @@ bool idb::interface::send(
   return send(oss.str());
 
 }
+
+/* ------------------------------------------------------------------------- */
+/* Method : interface::send()                                                */
+/* ------------------------------------------------------------------------- */
 
 #include <curl/curl.h>
 inline bool idb::interface::send(const std::string& data) {
@@ -81,10 +93,13 @@ inline bool idb::interface::send(const std::string& data) {
     curl_easy_cleanup(handle);
     return false;
   }
-
   
   curl_slist_free_all(headers);
   curl_easy_cleanup(handle);
   return true;
 
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// End                                                                     ///
+///////////////////////////////////////////////////////////////////////////////

@@ -102,9 +102,12 @@ int main(int argc, char* argv[]) {
     const auto ret = iface.send(name, tag, keyval_vector);
     auto end = high_resolution_clock::now();
     auto elapsed = duration_cast<milliseconds>(end - start);
+
+    std::cout << "\r" << std::string(100, ' ') << std::flush;
     std::cout << "\rInfluxdb server write time: " 
               << elapsed.count() << "ms"
               << std::flush;
+
 
     if (!ret) break;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));

@@ -5,10 +5,11 @@
 #include <vector>
 
 namespace idb {
-/**
- * @class interface
- * @brief Class to interact with an InfluxDB database.
- */
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class Interface                                                         ///
+///////////////////////////////////////////////////////////////////////////////
+
 class interface {
 
   public:
@@ -51,13 +52,16 @@ class interface {
 
   private:
 
-    const std::string url;    /**< URL of the InfluxDB server */
-    const std::string org;    /**< InfluxDB organization */
-    const std::string bucket; /**< Bucket to send data to */
-    const std::string token;  /**< Token for write access */
+    const std::string url;
+    const std::string org;
+    const std::string bucket;
+    const std::string token;
 
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/// End                                                                     ///
+///////////////////////////////////////////////////////////////////////////////
 } // namespace idb
 #include "idb.ipp"
 #endif
