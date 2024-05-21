@@ -10,11 +10,11 @@ you see fit.
 NOTE: to configure the project, refer to the /cmake/config.cmake file.
 
 ```bash
-REPO_NAME="periodic-async"
-git clone https://github.com/samridh-dev/periodic-async.git $REPO_NAME
+REPO_NAME="idbcpp"
+git clone https://github.com/samridh-dev/idb-cpp.git $REPO_NAME
 pushd $REPO_NAME
 git submodule update --init --recursive
-mkdir -p bin/ dat/
+mkdir -p bin/
 mkdir -p cmake/build/
 pushd cmake/build
 cmake ../.. -Wdev
