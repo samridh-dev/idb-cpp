@@ -22,13 +22,10 @@ static void print_help() {
 
 int main(int argc, char* argv[]) {
 
-  const std::vector<std::pair<std::string, double>> keyval_pairs = [] {
-    std::vector<std::pair<std::string, double>> pairs;
-    for (int i = 0; i <= 1000; ++i) {
-      pairs.emplace_back("value", i);
-    }
-    return pairs;
-  }();
+  std::vector<double> val;
+  for (int i = 0; i < 1000; i++) {
+    val.push_back(i);
+  }
 
   std::string url = "";
   std::string org = "";
@@ -94,24 +91,18 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  for (const auto& keyval : keyval_pairs) {
-    std::vector<std::pair<std::string, double>> keyval_vector = {keyval};
+  using namespace std::chrono;
+  auto start = high_resolution_clock::now();
 
-    using namespace std::chrono;
-    auto start = high_resolution_clock::now();
-    const auto ret = iface.send(name, tag, keyval_vector);
-    auto end = high_resolution_clock::now();
-    auto elapsed = duration_cast<milliseconds>(end - start);
+  iface.send(name, tag, "f", val);
 
-    std::cout << "\r" << std::string(100, ' ') << std::flush;
-    std::cout << "\rInfluxdb server write time: " 
-              << elapsed.count() << "ms"
-              << std::flush;
+  auto end = high_resolution_clock::now();
+  auto elapsed = duration_cast<milliseconds>(end - start);
 
-
-    if (!ret) break;
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
+  std::cout << "\r" << std::string(100, ' ') << std::flush;
+  std::cout << "\rInfluxdb server write time: " 
+            << elapsed.count() << "ms"
+            << std::flush;
 
   return 0;
 }

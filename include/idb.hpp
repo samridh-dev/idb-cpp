@@ -31,6 +31,10 @@ class interface {
    */ 
   bool check_server() const;
 
+  template <typename T>
+  bool send(const std::string& name, const std::string& tag,
+            const std::string key, const std::vector<T>& vec);
+
   /**
    * @brief Sends data to the InfluxDB database.
    * @tparam T The type of the field values.
@@ -41,7 +45,7 @@ class interface {
    */
   template <typename T>
   bool send(const std::string& name, const std::string& tag,
-        const std::vector<std::pair<std::string, T>>& keyval);
+            const std::vector<std::pair<std::string, T>>& keyval);
 
   /**
    * @brief Sends raw string data to the InfluxDB database.

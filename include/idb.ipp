@@ -11,6 +11,31 @@
 /* ------------------------------------------------------------------------- */
 
 template <typename T>
+bool idb::interface::send(const std::string& name, const std::string& tag,
+                          const std::string key, const std::vector<T>& vec) {
+
+  std::ostringstream oss;
+
+  oss << name << "," << tag << " "; 
+  for (size_t i = 0; i < vec.size(); ++i) {
+    oss << key << i << "=" << vec[i];
+    if (i < vec.size() - 1) oss << ",";
+  }
+
+  using namespace std::chrono;
+  auto now = system_clock::now();
+  auto timestamp = duration_cast<milliseconds>(now.time_since_epoch());
+  oss << " " << timestamp.count();
+
+  return send(oss.str());
+
+}
+
+/* ------------------------------------------------------------------------- */
+/* Method : interface::send()                                                */
+/* ------------------------------------------------------------------------- */
+
+template <typename T>
 bool idb::interface::send(
   const std::string& name, const std::string& tag,
   const std::vector<std::pair<std::string, T>>& keyval
