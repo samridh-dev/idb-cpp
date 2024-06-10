@@ -13,6 +13,11 @@ namespace idb {
 class interface {
 
   public:
+
+  /**
+   * @brief Empty Constructor of an interface object.
+   */
+  interface();
   
   /**
    * @brief Constructs an interface object.
@@ -25,6 +30,14 @@ class interface {
             const std::string& _org,
             const std::string& _bucket,
             const std::string& _token);
+
+  /**
+   * @brief Setter Functions
+   */
+  void set_url(const std::string& _url);
+  void set_org(const std::string& _org);
+  void set_bucket(const std::string& _bucket);
+  void set_token(const std::string& _token);
   
   /**
    * @brief Checks if Influxdb server is ready to recieve data
@@ -56,10 +69,10 @@ class interface {
 
   private:
 
-    const std::string url;
-    const std::string org;
-    const std::string bucket;
-    const std::string token;
+    std::string url;
+    std::string org;
+    std::string bucket;
+    std::string token;
 
 };
 

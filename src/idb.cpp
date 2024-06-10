@@ -9,11 +9,34 @@
 /* Method : interface::interface()                                           */
 /* ------------------------------------------------------------------------- */
 
+idb::interface::interface() {}
+
+/* ------------------------------------------------------------------------- */
+/* Method : interface::interface()                                           */
+/* ------------------------------------------------------------------------- */
+
 idb::interface::interface(const std::string& _url, 
                           const std::string& _org,
                           const std::string& _bucket,
                           const std::string& _token) 
   : url(_url), org(_org), bucket(_bucket), token(_token) {}
+
+/* ------------------------------------------------------------------------- */
+/* Method : Setter Functions                                                 */
+/* ------------------------------------------------------------------------- */
+
+void idb::interface::set_url(const std::string& _url) {
+  url = _url; 
+}
+void idb::interface::set_org(const std::string& _org) {
+  org = _org; 
+}
+void idb::interface::set_bucket(const std::string& _bucket) {
+  bucket = _bucket; 
+}
+void idb::interface::set_token(const std::string& _token) {
+  token = _token; 
+}
 
 /* ------------------------------------------------------------------------- */
 /* Method : interface::check_server                                          */

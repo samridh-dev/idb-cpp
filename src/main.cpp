@@ -27,12 +27,12 @@ int main(int argc, char* argv[]) {
     val.push_back(i);
   }
 
-  std::string url = "";
-  std::string org = "";
-  std::string bucket = "";
-  std::string token = "";
-  std::string name = "";
-  std::string tag = "";
+  std::string url     = "";
+  std::string org     = "";
+  std::string bucket  = "";
+  std::string token   = "";
+  std::string name    = "";
+  std::string tag     = "";
 
   int option;
   static struct option long_options[] = {
