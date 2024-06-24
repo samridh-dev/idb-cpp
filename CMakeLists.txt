@@ -22,6 +22,6 @@ if (ENABLE_BUILD_LIBRARY)
   target_include_directories(idbcpp INTERFACE 
     ${CMAKE_CURRENT_SOURCE_DIR}/include
   )
-  target_link_libraries(hdaq INTERFACE libcurl)
+  target_link_libraries(idbcpp INTERFACE libcurl)
 
 endif()
